@@ -7,15 +7,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 let dotenv = require('dotenv'); //enables environment variables for development
 dotenv.load();
 
-if ((app.get('env') !== 'production')) {
-	// disable CORS when local
-	app.use(function(req, res, next) {
-		res.header("Access-Control-Allow-Origin", "*");
-		res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-		next();
-	});
-}
+// disable CORS
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
 app.get('/', function (req, res) {
 	res.send('Hello World!');
 });
