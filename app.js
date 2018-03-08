@@ -6,6 +6,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 let dotenv = require('dotenv'); //enables environment variables for development
 dotenv.load();
+const requestLogger = require('morgan');
+app.use(requestLogger('tiny'));
 
 // disable CORS
 app.use(function(req, res, next) {
