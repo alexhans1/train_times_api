@@ -30,7 +30,7 @@ router.get('/searchLocations/:searchInput', function(req, res) {
 	}
 });
 
-router.get('/getDepartures/:extId', function(req, res) {
+router.get('/getDepartures/:extId/:products?', function(req, res) {
 	try {
 		console.info('Retrieving VBB departures');
 		let getDeparturesOptions = {
@@ -38,12 +38,17 @@ router.get('/getDepartures/:extId', function(req, res) {
 			url: buildUrl('departureBoard', {
 				extId: req.params.extId,
 				maxJourneys: 6,
+				products: req.params.products || null,
 			}),
 			json: true,
 		};
 
 		request(getDeparturesOptions)
 		.then(function (parsedBody) {
+			if (!parsedBody.Departure) {
+			  res.send([]);
+			  return
+			}
 			res.send(parsedBody.Departure.map((departure) => {
 				return {
 					name: departure.name,
