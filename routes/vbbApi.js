@@ -47,8 +47,13 @@ router.get('/getDepartures/:extId', function(req, res) {
 			res.send(parsedBody.Departure.map((departure) => {
 				return {
 					name: departure.name,
+					line: departure.Product.line,
 					time: departure.time,
-					rtime: departure.rtime,
+					date: departure.date,
+					tz: departure.tz,
+					rtTime: departure.rtTime,
+					rtDate: departure.rtDate,
+					rtTz: departure.rtTz,
 					direction: departure.direction,
 					trainCategory: departure.trainCategory,
 				}
