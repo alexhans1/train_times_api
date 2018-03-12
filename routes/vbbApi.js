@@ -47,7 +47,6 @@ router.get('/getDepartures/:extId/:products?', function(req, res) {
 		.then(function (parsedBody) {
 			if (!parsedBody.Departure) {
 			  res.send([]);
-			  return
 			}
 			res.send(parsedBody.Departure.map((departure) => {
 				return {
