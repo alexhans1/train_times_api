@@ -38,7 +38,7 @@ router.get('/getDepartures/:extId/:products?', function(req, res) {
 			method: 'GET',
 			url: buildUrl('departureBoard', {
 				extId: req.params.extId,
-				maxJourneys: 6,
+				// maxJourneys: 6,
 				products: req.params.products || null,
 				direction: req.query.direction || null,
 			}),
@@ -50,6 +50,7 @@ router.get('/getDepartures/:extId/:products?', function(req, res) {
 			if (!parsedBody.Departure || parsedBody.Departure === []) {
 			  res.send([]);
 			}
+			console.log(parsedBody);
 			res.send(parsedBody.Departure.map((departure) => {
 				return {
 					name: departure.name,
@@ -63,7 +64,7 @@ router.get('/getDepartures/:extId/:products?', function(req, res) {
 					direction: departure.direction,
 					trainCategory: departure.trainCategory,
 				}
-			}))
+			}).slice(0,6));
 		})
 		.catch(function (e) {
 			console.error(e);
