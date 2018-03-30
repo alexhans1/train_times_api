@@ -23,11 +23,11 @@ router.get('/searchLocations/:searchInput', function(req, res) {
 		})
 		.catch(function (e) {
 			console.error(e);
-			res.send('Error while searching VBB locations.');
+            res.send({error: true, message: 'Error while searching VBB locations.'});
 		});
 	} catch (ex) {
 		console.error(ex);
-		res.send('Error while searching VBB locations.');
+        res.send({error: true, message: 'Error while searching VBB locations.'});
 	}
 });
 
@@ -68,11 +68,11 @@ router.get('/getDepartures/:extId/:products?', function(req, res) {
 		})
 		.catch(function (e) {
 			console.error(e);
-			res.send('Error while retrieving VBB departures.');
+            res.send({error: true, message: 'Error while retrieving VBB departures.'});
 		});
 	} catch (ex) {
 		console.error(ex);
-		res.send('Error while retrieving VBB departures.');
+        res.send({error: true, message: 'Error while retrieving VBB departures.'});
 	}
 });
 
@@ -121,7 +121,8 @@ router.get('/getLines/:extId', function(req, res) {
                         })
                 } catch (ex) {
                     console.error('Error while getting destination ID');
-                    console.error(ex)
+                    console.error(ex);
+                    res.send({error: true, message: 'Error while getting VBB lines at station.'});
                 }
             };
             for (let i = 0; i < availAbleLines.length; i++) {
@@ -147,11 +148,11 @@ router.get('/getLines/:extId', function(req, res) {
 		})
 		.catch(function (e) {
 			console.error(e);
-			res.send('Error while getting VBB lines at station.');
+			res.send({error: true, message: 'Error while getting VBB lines at station.'});
 		});
 	} catch (ex) {
 		console.error(ex);
-		res.send('Error while getting VBB lines at station.');
+		res.send({error: true, message: 'Error while getting VBB lines at station.'});
 	}
 });
 
