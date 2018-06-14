@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request-promise');
+const moment = require('moment-timezone');
 
 const vbbApiBaseUrl = 'http://fahrinfo.vbb.de/restproxy/';
 
@@ -55,6 +56,12 @@ router.get('/getDepartures/:id/:products?', function(req, res) {
                 return
             }
             res.send(parsedBody.Departure.map((departure) => {
+                const now = moment().tz("Europe/Berlin").format();
+                const hasRealTimeData = !!(departure.rtDate && departure.rtTime);
+                const departureTime = moment((departure.rtDate || departure.date) + ' ' + (departure.rtTime || departure.time));
+                const duration = moment.duration(departureTime.diff(now));
+                const timeUntilDeparture = Math.round(duration.asMinutes());
+
                 return {
                     name: departure.name,
                     line: departure.Product.line,
@@ -66,8 +73,10 @@ router.get('/getDepartures/:id/:products?', function(req, res) {
                     rtTz: departure.rtTz,
                     direction: departure.direction,
                     trainCategory: departure.trainCategory,
+                    hasRealTimeData,
+                    timeUntilDeparture,
                 }
-            }));
+            }).sort((a, b) => a.timeUntilDeparture - b.timeUntilDeparture));
         })
         .catch(function (e) {
             console.error(e);
