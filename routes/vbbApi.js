@@ -50,7 +50,6 @@ router.get('/getDepartures/:extId/:products?', function(req, res) {
 			if (!parsedBody.Departure || parsedBody.Departure === []) {
 			  res.send([]);
 			}
-			console.log(parsedBody);
 			res.send(parsedBody.Departure.map((departure) => {
 				return {
 					name: departure.name,
