@@ -4,8 +4,7 @@ const port = process.env.PORT || 3100;
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-let dotenv = require('dotenv'); //enables environment variables for development
-dotenv.load();
+require('dotenv').load(); //enables environment variables for development
 const requestLogger = require('morgan');
 app.use(requestLogger('tiny'));
 
